@@ -28,7 +28,7 @@ categorizeMutate <- function(dataSet, indices, categoryHash)
   
   colnames(temp) <- paste(colnames(temp),"Categorized", sep=" ")
   
-  dataSet <- cbind(dataSet[,-1],temp)
+  dataSet <- cbind(dataSet,temp)
   
   return(dataSet)
   
@@ -36,4 +36,4 @@ categorizeMutate <- function(dataSet, indices, categoryHash)
 
 test <- read.csv("test2.csv", stringsAsFactors = FALSE)
 categoryHashtest <- data.frame(c(0,1,2,16984),c("Z","Test1","Test2","Test2"),stringsAsFactors = FALSE)
-test2 <- categorizeMutate(test,c(6,7),categoryHashtest)
+test2 <- categorizeMutate(test[,-1],c(5,6),categoryHashtest)
