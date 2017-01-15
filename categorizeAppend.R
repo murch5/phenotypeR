@@ -15,6 +15,8 @@
 # return:
 #   output - hash table converted value (typically as character)
 
+
+
 categorizeAppend <- function(dataSet, indices, categoryHash)
 {
   
