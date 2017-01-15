@@ -18,20 +18,16 @@ library(plyr) #include plyr library
 categorize <- function(input,categoryHash)
 {
   
- categorizedData <- apply(input[,-1],2,function(y){
-  
-    if(is.na(y)) {
-      mappedData <- "Temp"
+    if(is.na(input)) {
+      categorizedData <- "NA"
       
-    }else{
+    }else{ 
       
-      mappedData <- as.data.frame(categoryHash[which(categoryHash[,1]==y),2],stringsAsFactors = FALSE)
+      categorizedData <- categoryHash[which(categoryHash[,1]==input),2]
+      print(categorizedData)
     }
- 
-   return(as.data.frame(mappedData,stringsAsFactors = FALSE))
-    
-  })
 
- return(as.data.frame(categorizedData,stringsAsFactors = FALSE))
+
+ return(categorizedData)
   
 }
