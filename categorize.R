@@ -5,6 +5,7 @@
 # Helper function used to categorize input based on category hash table 
 #
 # - passes input value and category hash table and returns category value
+# - if key value has no associated hash, return "NoVal"
 #
 # arguments:
 #   input - value to be categorized
@@ -24,7 +25,7 @@ categorize <- function(input,categoryHash)
       categorizedData <- categoryHash[which(categoryHash[,1]==input),2]
     }
 
-if(length(categorizedData)<1){categorizedData <- "NaN"}
+if(length(categorizedData)<1){categorizedData <- "NoVal"}
   
  return(categorizedData)
   
