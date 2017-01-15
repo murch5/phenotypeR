@@ -46,7 +46,7 @@ categoryToDosage <- function(dataSet,indices,dosageHash)
   
     })
   
-  print(combined)
+  print(combined) 
   
   temp <- cbind(temp,combined)
   dataSet <- cbind(dataSet,temp)

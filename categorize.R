@@ -14,19 +14,19 @@
 # return:
 #   output - hash table converted value (typically as character)
 
-categorize <- function(input,categoryHash)
+categorize <- function(input, categoryHash)
 {
+  if (is.na(input)) {
+    categorizedData <- "NA"
+    
+  } else{
+    categorizedData <- categoryHash[which(categoryHash[, 1] == input), 2]
+  }
   
-    if(is.na(input)) {
-      categorizedData <- "NA"
-      
-    }else{ 
-      
-      categorizedData <- categoryHash[which(categoryHash[,1]==input),2]
-    }
-
-if(length(categorizedData)<1){categorizedData <- "NoVal"}
+  if (length(categorizedData) < 1) {
+    categorizedData <- "NoVal"
+  }
   
- return(categorizedData)
+  return(categorizedData)
   
 }
