@@ -24,6 +24,8 @@ categorize <- function(input,categoryHash)
       categorizedData <- categoryHash[which(categoryHash[,1]==input),2]
     }
 
+if(length(categorizedData)<1){categorizedData <- "NaN"}
+  
  return(categorizedData)
   
 }
