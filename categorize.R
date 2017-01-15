@@ -13,8 +13,6 @@
 # return:
 #   output - hash table converted value (typically as character)
 
-library(plyr) #include plyr library
-
 categorize <- function(input,categoryHash)
 {
   
@@ -24,9 +22,7 @@ categorize <- function(input,categoryHash)
     }else{ 
       
       categorizedData <- categoryHash[which(categoryHash[,1]==input),2]
-      print(categorizedData)
     }
-
 
  return(categorizedData)
   

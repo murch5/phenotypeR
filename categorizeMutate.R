@@ -16,9 +16,6 @@
 # return:
 #   output - data.frame containg dataSet with new category columns appended adjacent to original columns
 
-library(plyr) #include plyr library
-library(dplyr) #include dplyr library
-
 source("categorize.R")  #include source for categorize function
 
 categorizeMutate <- function(dataSet, indices, categoryHash)
