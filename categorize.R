@@ -5,6 +5,7 @@
 # Helper function used to categorize input based on category hash table 
 #
 # - passes input value and category hash table and returns category value
+# - if key value has no associated hash, return "NoVal"
 #
 # arguments:
 #   input - value to be categorized
@@ -12,8 +13,6 @@
 #
 # return:
 #   output - hash table converted value (typically as character)
-
-library(plyr) #include plyr library
 
 categorize <- function(input,categoryHash)
 {
@@ -24,10 +23,10 @@ categorize <- function(input,categoryHash)
     }else{ 
       
       categorizedData <- categoryHash[which(categoryHash[,1]==input),2]
-      print(categorizedData)
     }
 
-
+if(length(categorizedData)<1){categorizedData <- "NoVal"}
+  
  return(categorizedData)
   
 }
