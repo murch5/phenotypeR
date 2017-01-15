@@ -28,12 +28,32 @@ categoryToDosage <- function(dataSet,indices,dosageHash)
   })
   
   colnames(temp) <- paste(colnames(temp),"Dosage", sep=" ")
+  print(temp)
   
   
+  combined <- apply(temp,2,function(x){
+    
+    if(!any(sapply(temp,class)=="character"))
+    {
+      
+      return(sum(x))
+      
+    }
+    else
+    {
+      return("NoVal")
+    }
   
+    })
+  
+  print(combined)
+  
+  temp <- cbind(temp,combined)
   dataSet <- cbind(dataSet,temp)
-  
-  return(dataSet)
-  
+
   return(dataSet)
 }
+
+test <- read.csv("test2.csv", stringsAsFactors = FALSE)
+categoryHashtest <- data.frame(c("Test1","Test2","Z"),c(1,2,3),stringsAsFactors = FALSE)
+test2 <- categoryToDosage(test2,c(7,8),categoryHashtest)
