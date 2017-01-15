@@ -29,6 +29,8 @@ categorizeMutate <- function(dataSet, indices, categoryHash)
     return(t)
   })
   
+  colnames(temp) <- paste(colnames(temp),"Categorized", sep=" ")
+  
   dataSet <- cbind(dataSet[,-1],temp)
   
   return(dataSet)
