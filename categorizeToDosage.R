@@ -32,7 +32,7 @@ categoryToDosage <- function(dataSet,indices,dosageHash)
   
   combined <- as.data.frame(rowSums(temp,na.rm=TRUE))
   
- colnames(combined) <- paste(colnames(temp), collapse = '+')
+  colnames(combined) <- paste(colnames(temp), collapse = '+')
   
   temp <- cbind(temp,combined)
   dataSet <- cbind(dataSet,temp)
