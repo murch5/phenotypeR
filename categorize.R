@@ -17,14 +17,14 @@
 categorize <- function(input, categoryHash)
 {
   if (is.na(input)) {
-    categorizedData <- "NA"
+    categorizedData <- NA
     
   } else{
     categorizedData <- categoryHash[which(categoryHash[, 1] == input), 2]
   }
   
   if (length(categorizedData) < 1) {
-    categorizedData <- "NoVal"
+    categorizedData <- NA
   }
   
   return(categorizedData)
