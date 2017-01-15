@@ -24,17 +24,11 @@ source("categorize.R")  #include source for categorize function
 categorizeMutate <- function(dataSet, indices, categoryHash)
 {
  
-  temp <- ddply(dataSet[indices],"ID", function(x){
-    
-    t <- as.data.frame(categorize(x,categoryHash),stringsAsFactors = FALSE)
-                      print(t)
-                       print(nrow(t))
-                       #print(ncol(t))
-    
+  temp <- apply(dataSet[indices],c(1,2), function(x){
+    t <- categorize(x,categoryHash)
     return(t)
   })
   
-  colnames(temp) <- colnames(dataSet)[indices]
   dataSet <- cbind(dataSet[,-1],temp)
   
   return(dataSet)
@@ -43,4 +37,4 @@ categorizeMutate <- function(dataSet, indices, categoryHash)
 
 test <- read.csv("test2.csv", stringsAsFactors = FALSE)
 categoryHashtest <- data.frame(c(0,1,2,16984),c("Z","Test1","Test2","Test2"),stringsAsFactors = FALSE)
-test2 <- categorizeMutate(test,c(3,6,7),categoryHashtest)
+test2 <- categorizeMutate(test,c(6,7),categoryHashtest)
