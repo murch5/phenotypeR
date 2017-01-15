@@ -17,6 +17,8 @@
 # return:
 #   output - data.frame containg dataSet with new category columns
 
+library(dplyr)
+
 source("categorize.R")  #include source for categorize function
 
 categoryToDosage <- function(dataSet,indices,dosageHash)
@@ -28,13 +30,16 @@ categoryToDosage <- function(dataSet,indices,dosageHash)
   })
   
   colnames(temp) <- paste(colnames(temp),"Dosage", sep=" ")
-  print(colnames(temp))
+  
   
   combined <- as.data.frame(rowSums(temp,na.rm=TRUE))
+  combinedFrac <- as.data.frame(combined/(max(dosageHash[,2],na.rm=TRUE)*length(indices)))
   
-  colnames(combined) <- paste(colnames(temp), collapse = '+')
+  colnames(combined) <- paste(paste(colnames(temp), collapse = '+'),"Combined",sep=" ")
+  colnames(combinedFrac) <- paste(paste(colnames(temp), collapse = '+'),"Combined Fraction",sep=" ")
   
   temp <- cbind(temp,combined)
+ temp <- cbind(temp,combinedFrac)
   dataSet <- cbind(dataSet,temp)
 
   return(dataSet)
