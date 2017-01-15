@@ -19,19 +19,19 @@ categorize <- function(input,categoryHash)
 {
   
  categorizedData <- apply(input[,-1],2,function(y){
-    
-    if(!is.na(y)){
-      return(as.data.frame(categoryHash[which(categoryHash[,1]==y),2]))
+  
+    if(is.na(y)) {
+      mappedData <- "Temp"
+      
     }else{
-      return(data.frame(0))
+      
+      mappedData <- as.data.frame(categoryHash[which(categoryHash[,1]==y),2],stringsAsFactors = FALSE)
     }
-    
-   
+ 
+   return(as.data.frame(mappedData,stringsAsFactors = FALSE))
     
   })
-  
- # print(categoryHash[which(categoryHash[,1]==input[,2]),2])
- print(typeof(categorizedData))
- return(as.data.frame(categorizedData))
+
+ return(as.data.frame(categorizedData,stringsAsFactors = FALSE))
   
 }
