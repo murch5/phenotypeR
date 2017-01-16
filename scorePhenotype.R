@@ -55,7 +55,10 @@ scorePhenotypeByLocation <-
         MeanUnweighted = mean(Unweighted, na.rm = T),
         MeanWeighted = mean(Weighted, na.rm = T),
         SDUnweighted = sd(Unweighted,na.rm=T),
-        SDWeighted = sd(Weighted,na.rm=T)
+        SDWeighted = sd(Weighted,na.rm=T),
+        SumLocation = sum(!is.na(Unweighted),na.rm=T),
+        SumLocationAffected = sum(Unweighted>0,na.rm=T),
+        SumNA = sum(is.na(Unweighted))
       )
 
     
