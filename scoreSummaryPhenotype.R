@@ -26,8 +26,10 @@ source("scorePhenotype.R")
 scoreSummaryPhenotype <- function(input,recodeValues, locationWeights)
 {
   
-  d <-
+  locationSpecific <-
     input %>% group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>% select(.,Site,Involvement)  %>% do(scorePhenotypeByLocation(., recodeValues, locationWeights))
+  
+  
   return(d)
 }
 
