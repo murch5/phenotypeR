@@ -25,9 +25,9 @@ scorePhenotypeByLocation <-
   {
     print(input)
     scores <- as.data.frame(apply(input, 1, function(x) {
-      recodedScore <- recodeValues[which(recodeValues[, 1] == x[2]), 2]
+      recodedScore <- recodeValues[which(recodeValues[, 1] == x["Involvement"]), 2]
       weightedScore <-
-        recodedScore * (locationWeights[which(locationWeights[, 1] == x[1]), 2])
+        recodedScore * (locationWeights[which(locationWeights[, 1] == x["Site"]), 2])
       
       if (length(recodedScore) < 1) {
         recodedScore = NA
