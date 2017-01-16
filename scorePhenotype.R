@@ -23,6 +23,7 @@ library(plyr)
 scorePhenotypeByLocation <-
   function(input, recodeValues, locationWeights)
   {
+    print(input)
     scores <- as.data.frame(apply(input, 1, function(x) {
       recodedScore <- recodeValues[which(recodeValues[, 1] == x[2]), 2]
       weightedScore <-
@@ -36,7 +37,6 @@ scorePhenotypeByLocation <-
       }
       
       score <- c(recodedScore, weightedScore)
-      print(score)
       
       return(score)
       
@@ -67,7 +67,7 @@ scorePhenotypeByLocation <-
     return(locationScores)
   }
 
-testData <- read.csv("test.csv")
+testData <- read.csv("test.csv",stringsAsFactors=FALSE)
 testData2 <- testData[c(2:8), c(16, 17)]
 t <-
   scorePhenotypeByLocation(testData2, data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
