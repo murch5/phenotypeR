@@ -20,7 +20,8 @@ categorize <- function(input, categoryHash)
     categorizedData <- NA
     
   } else{
-    categorizedData <- categoryHash[which(categoryHash[, 1] == input), 2]
+    categorizedData <-
+      categoryHash[which(categoryHash[, 1] == input), 2]
   }
   
   if (length(categorizedData) < 1) {

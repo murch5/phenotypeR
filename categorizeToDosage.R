@@ -17,33 +17,35 @@
 # return:
 #   output - data.frame containg dataSet with new category columns
 
-library(dplyr)
-
 source("categorize.R")  #include source for categorize function
 
-categoryToDosage <- function(dataSet,indices,dosageHash)
+categoryToDosage <- function(dataSet, indices, dosageHash)
 {
-  
-  temp <- apply(dataSet[indices],c(1,2), function(x){
-    t <- categorize(as.character(x),dosageHash)
+  temp <- apply(dataSet[indices], c(1, 2), function(x) {
+    t <- categorize(as.character(x), dosageHash)
     return(t)
   })
   
-  colnames(temp) <- paste(colnames(temp),"Dosage", sep=" ")
+  colnames(temp) <- paste(colnames(temp), "Dosage", sep = " ")
   
   
-  combined <- as.data.frame(rowSums(temp,na.rm=TRUE))
-  combinedFrac <- as.data.frame(combined/(max(dosageHash[,2],na.rm=TRUE)*length(indices)))
+  combined <- as.data.frame(rowSums(temp, na.rm = TRUE))
+  combinedFrac <-
+    as.data.frame(combined / (max(dosageHash[, 2], na.rm = TRUE) * length(indices)))
   
-  colnames(combined) <- paste(paste(colnames(temp), collapse = '+'),"Combined",sep=" ")
-  colnames(combinedFrac) <- paste(paste(colnames(temp), collapse = '+'),"Combined Fraction",sep=" ")
+  colnames(combined) <-
+    paste(paste(colnames(temp), collapse = '+'), "Combined", sep = " ")
+  colnames(combinedFrac) <-
+    paste(paste(colnames(temp), collapse = '+'), "Combined Fraction", sep =
+            " ")
   
-  temp <- cbind(temp,combined)
- temp <- cbind(temp,combinedFrac)
-  dataSet <- cbind(dataSet,temp)
-
+  temp <- cbind(temp, combined)
+  temp <- cbind(temp, combinedFrac)
+  dataSet <- cbind(dataSet, temp)
+  
   return(dataSet)
 }
 
-categoryHashtest <- data.frame(c("Test1","Test2","Z"),c(1,2,3),stringsAsFactors = FALSE)
-test3 <- categoryToDosage(test2,c(7,8),categoryHashtest)
+categoryHashtest <-
+  data.frame(c("Test1", "Test2", "Z"), c(1, 2, 3), stringsAsFactors = FALSE)
+test3 <- categoryToDosage(test2, c(7, 8), categoryHashtest)
