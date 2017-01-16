@@ -20,20 +20,20 @@ source("categorize.R")  #include source for categorize function
 
 categorizeMutate <- function(dataSet, indices, categoryHash)
 {
- 
-  temp <- apply(dataSet[indices],c(1,2), function(x){
-    t <- categorize(x,categoryHash)
+  temp <- apply(dataSet[indices], c(1, 2), function(x) {
+    t <- categorize(x, categoryHash)
     return(t)
   })
   
-  colnames(temp) <- paste(colnames(temp),"Categorized", sep=" ")
+  colnames(temp) <- paste(colnames(temp), "Categorized", sep = " ")
   
-  dataSet <- cbind(dataSet,temp)
+  dataSet <- cbind(dataSet, temp)
   
   return(dataSet)
   
 }
 
 test <- read.csv("test2.csv", stringsAsFactors = FALSE)
-categoryHashtest <- data.frame(c(1,2,16984),c("Test1","Test2","Test2"),stringsAsFactors = FALSE)
-test2 <- categorizeMutate(test[,-1],c(5,6),categoryHashtest)
+categoryHashtest <-
+  data.frame(c(1, 2, 16984), c("Test1", "Test2", "Test2"), stringsAsFactors = FALSE)
+test2 <- categorizeMutate(test[,-1], c(5, 6), categoryHashtest)
