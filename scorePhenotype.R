@@ -17,36 +17,54 @@
 # return:
 #   output - data.frame containing new score values
 
-library(dplyr)
 
-scorePhenotypeByLocation <- function(input,recodeValues,locationWeights)
-{
-  
-  scores <- t(as.data.frame(apply(input,1,function(x){
-          
-             recodedScore <- recodeValues[which(recodeValues[,1]==x[2]),2]
-             weightedScore <- recodedScore*(locationWeights[which(locationWeights[,1]==x[1]),2])
-             
-             if(length(recodedScore)<1){recodedScore = NA}
-             if(length(weightedScore)<1){weightedScore = NA}
-             
-             score <- c(recodedScore,weightedScore)
-             print(score)
-             
-    return(score)
+library(plyr)
+
+scorePhenotypeByLocation <-
+  function(input, recodeValues, locationWeights)
+  {
+    scores <- as.data.frame(apply(input, 1, function(x) {
+      recodedScore <- recodeValues[which(recodeValues[, 1] == x[2]), 2]
+      weightedScore <-
+        recodedScore * (locationWeights[which(locationWeights[, 1] == x[1]), 2])
+      
+      if (length(recodedScore) < 1) {
+        recodedScore = NA
+      }
+      if (length(weightedScore) < 1) {
+        weightedScore = NA
+      }
+      
+      score <- c(recodedScore, weightedScore)
+      print(score)
+      
+      return(score)
+      
+    }))
     
-  })))
-  
-  colnames(scores) <- c("Unweighted","Weighted")
-  
-  totals <- colSums(scores, na.rm = TRUE)
-  
-  locationScores <- data.frame(totals[1],totals[2])
-  colnames(locationScores) <- c("Total Unweighted","Total Weighted")
-  return(locationScores)
-}
+    scores <- as.data.frame(t(scores))
+    colnames(scores) <- c("Unweighted", "Weighted")
+    
+    d <-
+      ddply(
+        scores,
+        .(),
+        summarize,
+        SumUnweighted = sum(Unweighted, na.rm = T),
+        SumWeighted = sum(Weighted, na.rm = T),
+        MeanUnweighted = mean(Unweighted, na.rm = T),
+        MeanWeighted = mean(Weighted, na.rm = T),
+        SDUnweighted = sd(Unweighted,na.rm=T),
+        SDWeighted = sd(Weighted,na.rm=T)
+      )
+
+    
+    locationScores <- d[,-1] #removed .id column from ddply
+   
+    return(locationScores)
+  }
 
 testData <- read.csv("test.csv")
-testData2 <- testData[c(2:8),c(16,17)]
-t <- scorePhenotypeByLocation(testData2,data.frame(c("Not Involved","Macroscopic Disease"),c(0,3)),data.frame(c("Left Colon","Perianal"),c(1,3)))
-
+testData2 <- testData[c(2:8), c(16, 17)]
+t <-
+  scorePhenotypeByLocation(testData2, data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
