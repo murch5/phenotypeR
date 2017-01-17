@@ -27,14 +27,20 @@ source("scorePhenotypeFeature.R")
 scoreSummaryPhenotype <- function(input,recodeValues, locationWeights, featureMapping)
 {
   
-  d <-
+  siteScores <-
     input %>% 
     group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
-    select(.,Site,Involvement)  %>% 
-    do(scorePhenotypeByLocation(., recodeValues, locationWeights)
-    do(scorePhenotypeByFeature(.,featureMapping)))
+    select(.,Site,Involvement, Luminal, EIM)  %>% 
+    do(scorePhenotypeByLocation(., recodeValues, locationWeights)) %>% 
+    do(scorePhenotypeByFeature(.,featureMapping))
   
+  featureScores <-
+    input %>% 
+    group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
+    select(., EIM, Luminal)  %>% 
+    do(scorePhenotypeByFeature(.,featureMapping))
   
+   d<-cbind(sitesScores,featureScore) 
   return(d)
 }
 
@@ -51,4 +57,4 @@ e <- list("EIM",EIM)
 names(e) <- c("columnID","map")
 
 featureMapping <- list(l,e)
-ddt <- scoreSummaryPhenotype(testData,recode, locationWeight)
+ddt <- scoreSummaryPhenotype(testData,recode, locationWeight, featureMapping)
