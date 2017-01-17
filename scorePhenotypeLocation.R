@@ -23,7 +23,7 @@ library(plyr)
 scorePhenotypeByLocation <-
   function(input, recodeValues, locationWeights)
   {
-    print(input)
+    
     scores <- as.data.frame(apply(input, 1, function(x) {
       recodedScore <- recodeValues[which(recodeValues[, 1] == x["Involvement"]), 2]
       weightedScore <-
