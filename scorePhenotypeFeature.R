@@ -20,24 +20,25 @@
 scorePhenotypeByFeature <- function(input,featureMapping)
 {
   
-  scoresFeature <- t(lapply(featureMapping, function(x){
+  scoresFeature <- (lapply(featureMapping, function(x){
     
     temp <- unique(input[,x[["columnID"]]])
     
+    print(x[["columnID"]])
     unweightedScore <- x[["map"]][which(x[["map"]][,"type"]==temp),"value"]
     if(length(unweightedScore)<1){unweightedScore = 0}
+    
+    unweightedScore <- as.data.frame(unweightedScore)
+    colnames(unweightedScore) <- paste(x[["columnID"]],"SumScore",sep=" ")
     return(unweightedScore)
   }))
   
   scoresFeature <- as.data.frame(scoresFeature)
-  
-  print(featureMapping)
- 
-  
+
   return(scoresFeature)
 }
 
-testData <- read.csv("test.csv",stringsAsFactors=FALSE)
+testData <- read.csv("test.csv",stringsAsFactors=FALSE,check.names=FALSE)
 testData2 <- testData[c(2:8), c("Luminal", "EIM")]
 
 luminalMap <- data.frame(type = c("","Inflammatory"), value = c(0,1),stringsAsFactors = FALSE)
