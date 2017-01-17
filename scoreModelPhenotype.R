@@ -20,11 +20,12 @@ library(dplyr)
 scoreModelPhenotype <- function(scoreSummary,weights)
 {
 
-  d <-
+  scoreModel <-
     scoreSummary %>%
     select(.,contains("Sum")) %>%
-    mutate(modelUnweighted = sum(.))
+    mutate(modelUnweighted = sum(.)) %>%
+    select(.,contains("model")) 
   
-  return(d)
+  return(scoreModel)
   
 }
