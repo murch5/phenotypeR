@@ -31,9 +31,6 @@ scorePhenotypeByFeature <- function(input,featureMapping)
   
   scoresFeature <- as.data.frame(scoresFeature)
   
-  print(featureMapping)
- 
-  
   return(scoresFeature)
 }
 
