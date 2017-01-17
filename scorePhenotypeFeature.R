@@ -26,8 +26,8 @@ scorePhenotypeByFeature <- function(input,featureMapping)
     unweightedScore <- x[["map"]][which(x[["map"]][,"type"]==as.character(temp)),"value"]
     if(length(unweightedScore)<1){unweightedScore = 0}
     
-    unweightedScore <- as.data.frame(unweightedScore)
-    colnames(unweightedScore) <- paste(x[["columnID"]],"SumScore",sep=" ")
+    unweightedScore <- as.data.frame(as.numeric(unweightedScore))
+    colnames(unweightedScore) <- paste(x[["columnID"]],"SumUnweighted",sep=" ")
     return(unweightedScore)
   })
   
