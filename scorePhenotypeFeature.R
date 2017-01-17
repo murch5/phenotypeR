@@ -34,11 +34,7 @@ scorePhenotypeByFeature <- function(input,featureMapping)
   }))
   
   scoresFeature <- as.data.frame(scoresFeature)
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 087d86a21774553791ad9d152d4f0626accabd89
   return(scoresFeature)
 }
 
