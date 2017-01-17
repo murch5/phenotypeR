@@ -22,18 +22,33 @@ library(dplyr)
 library(plyr)
 
 source("scorePhenotype.R")
+source("scorePhenotypeFeature.R")
 
-scoreSummaryPhenotype <- function(input,recodeValues, locationWeights)
+scoreSummaryPhenotype <- function(input,recodeValues, locationWeights, featureMapping)
 {
   
   d <-
     input %>% 
     group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
     select(.,Site,Involvement)  %>% 
-    do(scorePhenotypeByLocation(., recodeValues, locationWeights))
+    do(scorePhenotypeByLocation(., recodeValues, locationWeights)
+    do(scorePhenotypeByFeature(.,featureMapping)))
   
   
   return(d)
 }
 
-ddt <- scoreSummaryPhenotype(testData,data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
+#Mappings for test functions
+recode <- data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3))
+locationWeight <- data.frame(c("Left Colon", "Perianal"), c(1, 3))
+
+luminalMap <- data.frame(type = c("","Inflammatory"), value = c(0,1),stringsAsFactors = FALSE)
+EIM <- data.frame(type = c("","IDDM"), value = c(0,1),stringsAsFactors = FALSE)
+
+l <- list("Luminal",luminalMap)
+names(l) <- c("columnID","map")
+e <- list("EIM",EIM)
+names(e) <- c("columnID","map")
+
+featureMapping <- list(l,e)
+ddt <- scoreSummaryPhenotype(testData,recode, locationWeight)
