@@ -30,9 +30,8 @@ scoreSummaryPhenotype <- function(input,recodeValues, locationWeights, featureMa
     input %>% 
     group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
     select(.,Site,Involvement, Luminal, EIM)  %>% 
-    do(scorePhenotype(., recodeValues, locationWeights,featureMapping)) 
-    
-
+    do(scorePhenotype(., recodeValues, locationWeights,featureMapping))
+  
   return(d)
 }
 
