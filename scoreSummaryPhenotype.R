@@ -18,25 +18,53 @@
 # return:
 #   output - data.frame containing new score values
 
-library(dplyr)
 library(plyr)
+library(dplyr)
 
 source("scorePhenotype.R")
 
 scoreSummaryPhenotype <- function(input,recodeValues, locationWeights, featureMapping)
 {
   
-  d <-
+  scoreSummary <-
     input %>% 
     group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
     select(.,Site,Involvement, Luminal, EIM)  %>% 
-    do(scorePhenotype(., recodeValues, locationWeights,featureMapping)) 
-    
+    do(scorePhenotype(., recodeValues, locationWeights,featureMapping))
+  
+  print(scoreSummary)
+  
+  aggregateByID <<-
+    scoreSummary %>%
+    ungroup %>%
+    group_by(MuiseLabID) %>%
+    dplyr::summarize(.,aggregateMean.ByID = mean(modelUnweighted), aggregateSD.ByID = sd(modelUnweighted))
+  
+  aggregateByEnc <<-
+    scoreSummary %>%
+    ungroup %>%
+    group_by(MuiseLabID,Tbl_Encounter.Timing) %>%
+    dplyr::summarize(.,aggregateMean.ByEncounter = mean(modelUnweighted), aggregateSD.ByEncounter = sd(modelUnweighted))
+  
+  aggregateByDate <<-
+    scoreSummary %>%
+    ungroup %>%
+    group_by(MuiseLabID,Tbl_Encounter.Timing,Date) %>%
+    dplyr::summarize(.,aggregateMean.ByDate = mean(modelUnweighted), aggregateSD.ByDate = sd(modelUnweighted))
 
-  return(d)
+    
+  phenotypeScore <- list(scoreSummary,aggregateByDate,aggregateByEnc,aggregateByDate)
+    
+  
+    ddd<<-phenotypeScore
+
+  return(scoreSummary)
 }
 
 #Mappings for test functions
+
+testData <- testData[c(1:10000),] #subset to speed testing
+
 recode <- data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3))
 locationWeight <- data.frame(c("Left Colon", "Perianal"), c(1, 3))
 
