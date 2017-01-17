@@ -20,6 +20,7 @@
 
 source("scorePhenotypeLocation.R")
 source("scorePhenotypeFeature.R")
+source("scoreModelPhenotype.R")
 
 scorePhenotype <- function(dataSet,recodeValues, locationWeights, featureMapping)
 {
@@ -29,5 +30,9 @@ scorePhenotype <- function(dataSet,recodeValues, locationWeights, featureMapping
 
   scoreCombined <- cbind(site,feature)
   
-  return(scoreCombined)
+  model <- scoreModelPhenotype(scoreCombined,0)
+  
+  scoreSet <- cbind(scoreCombined,model)
+  
+  return(scoreSet)
 }
