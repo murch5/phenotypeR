@@ -18,10 +18,13 @@
 # return:
 #   output - data.frame containing new score values
 
-library(plyr)
-library(dplyr)
+
 
 source("scorePhenotype.R")
+source("compileScoringMap.R")
+
+library(plyr)
+library(dplyr)
 
 scoreSummaryPhenotype <- function(input,recodeValues, locationWeights, featureMapping)
 {
@@ -78,4 +81,9 @@ names(e) <- c("columnID","map")
 
 featureMapping <- list(l,e)
 
-ddt <- scoreSummaryPhenotype(testData,recode, locationWeight, featureMapping)
+r <- compileScoringMap("test.scoreConfig")
+c <- (r[[1]][[2]])
+q <- (r[[2]][[2]])
+
+
+ddt <- scoreSummaryPhenotype(testData,as.data.frame(c),as.data.frame(q), featureMapping)
