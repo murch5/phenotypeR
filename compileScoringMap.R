@@ -17,3 +17,31 @@
 #
 # return:
 #   output - data.frame containing new score values
+
+
+compileScoringMap <- function(fileName)
+{
+  
+  scoringMapRaw <- readLines(fileName)
+  
+  totalMaps <- (length(scoringMapRaw)/3)
+  
+  maps <- list()
+  
+  for(i in 1:totalMaps){
+    
+    newMapID <- scoringMapRaw[1+(3*(i-1))]
+    newMapKeys <- scoringMapRaw[2+(3*(i-1))]
+    newMapVals <- scoringMapRaw[3+(3*(i-1))]
+  
+    newMap <- data.frame(newMapKeys,newMapVals,stringsAsFactors = FALSE)
+    newMapSet <- list(newMapID,newMap)
+    
+    maps[[i]] <- newMapSet
+  }
+  
+  return(maps)
+}
+
+r <- compileScoringMap("test.scoreConfig")
+print(r)

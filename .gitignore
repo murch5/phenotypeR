@@ -36,3 +36,5 @@ vignettes/*.pdf
 #Extra files to ignore
 *.csv
 *.txt
+*scoreConfig
+
