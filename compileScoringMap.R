@@ -34,7 +34,11 @@ compileScoringMap <- function(fileName)
     newMapKeys <- scoringMapRaw[2+(3*(i-1))]
     newMapVals <- scoringMapRaw[3+(3*(i-1))]
   
+    newMapKeys <- strsplit(newMapKeys,",")
+    newMapVals <- strsplit(newMapVals,",")
+    
     newMap <- data.frame(newMapKeys,newMapVals,stringsAsFactors = FALSE)
+    colnames(newMap) <- c("key","value")
     newMapSet <- list(newMapID,newMap)
     
     maps[[i]] <- newMapSet
@@ -43,5 +47,4 @@ compileScoringMap <- function(fileName)
   return(maps)
 }
 
-r <- compileScoringMap("test.scoreConfig")
-print(r)
+#r <- compileScoringMap("test.scoreConfig")
