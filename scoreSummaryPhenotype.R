@@ -18,22 +18,23 @@
 # return:
 #   output - data.frame containing new score values
 
-
-
 source("scorePhenotype.R")
 source("compileScoringMap.R")
 
 library(plyr)
 library(dplyr)
 
-scoreSummaryPhenotype <- function(input,recodeValues, locationWeights, featureMapping)
+scoreSummaryPhenotype <- function(input,scoreMapping)
 {
+  
+  print(scoreMapping[3:length(scoreMapping)])
+  print(length(scoreMapping))
   
   scoreSummary <-
     input %>% 
     group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
     select(.,Site,Involvement, Luminal, EIM)  %>% 
-    do(scorePhenotype(., recodeValues, locationWeights,featureMapping))
+    do(scorePhenotype(., scoreMapping[[1]][[2]], scoreMapping[[2]][[2]],scoreMapping[c(3:(length(scoreMapping)))]))
   
   print(scoreSummary)
   
@@ -81,9 +82,10 @@ names(e) <- c("columnID","map")
 
 featureMapping <- list(l,e)
 
+print(featureMapping)
 r <- compileScoringMap("test.scoreConfig")
 c <- (r[[1]][[2]])
 q <- (r[[2]][[2]])
 
 
-ddt <- scoreSummaryPhenotype(testData,as.data.frame(c),as.data.frame(q), featureMapping)
+ddt <- scoreSummaryPhenotype(testData,r)
