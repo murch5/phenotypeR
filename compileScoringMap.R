@@ -40,6 +40,7 @@ compileScoringMap <- function(fileName)
     newMap <- data.frame(newMapKeys,newMapVals,stringsAsFactors = FALSE)
     colnames(newMap) <- c("key","value")
     newMapSet <- list(newMapID,newMap)
+    names(newMapSet) <- c("columnID","map")
     
     maps[[i]] <- newMapSet
   }
