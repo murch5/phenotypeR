@@ -38,6 +38,7 @@ evaluateSetCriteria <- function(classifiedData, classifyHash)
     
   })
   
+  
   q <- as.data.frame(q, stringsAsFactors = FALSE)
   colnames(q) <- classifyHash[1]
   setCriteriaAdded <- cbind(classifiedData, q)
