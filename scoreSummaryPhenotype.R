@@ -82,10 +82,10 @@ names(e) <- c("columnID","map")
 
 featureMapping <- list(l,e)
 
-print(featureMapping)
+
 r <- compileScoringMap("test.scoreConfig")
 c <- (r[[1]][[2]])
 q <- (r[[2]][[2]])
 
 
-ddt <- scoreSummaryPhenotype(testData,r)
+#ddt <- scoreSummaryPhenotype(testData,r)

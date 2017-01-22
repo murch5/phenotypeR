@@ -68,7 +68,7 @@ scorePhenotypeByLocation <-
     return(locationScores)
   }
 
-testData <- read.csv("test.csv",stringsAsFactors=FALSE)
-testData2 <- testData[c(2:8), c(16, 17)]
-t <-
-  scorePhenotypeByLocation(testData2, data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
+#testData <- read.csv("test.csv",stringsAsFactors=FALSE)
+#testData2 <- testData[c(2:8), c(16, 17)]
+#t <-
+#  scorePhenotypeByLocation(testData2, data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
