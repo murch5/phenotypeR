@@ -36,17 +36,17 @@ scorePhenotypeByFeature <- function(input,featureMapping)
   return(scoresFeature)
 }
 
-testData <- read.csv("test.csv",stringsAsFactors=FALSE,check.names=FALSE)
-testData2 <- testData[c(2:8), c("Luminal", "EIM")]
+#testData <- read.csv("test.csv",stringsAsFactors=FALSE,check.names=FALSE)
+#testData2 <- testData[c(2:8), c("Luminal", "EIM")]
 
-luminalMap <- data.frame(type = c("","Inflammatory"), value = c(0,1),stringsAsFactors = FALSE)
-EIM <- data.frame(type = c("","IDDM"), value = c(0,1),stringsAsFactors = FALSE)
+#luminalMap <- data.frame(type = c("","Inflammatory"), value = c(0,1),stringsAsFactors = FALSE)
+#EIM <- data.frame(type = c("","IDDM"), value = c(0,1),stringsAsFactors = FALSE)
 
-l <- list("Luminal",luminalMap)
-names(l) <- c("columnID","map")
-e <- list("EIM",EIM)
-names(e) <- c("columnID","map")
+#l <- list("Luminal",luminalMap)
+#names(l) <- c("columnID","map")
+#e <- list("EIM",EIM)
+#names(e) <- c("columnID","map")
 
-featureMapping <- list(l,e)
+#featureMapping <- list(l,e)
 
 #gg <- scorePhenotypeByFeature(testData2,featureMapping)

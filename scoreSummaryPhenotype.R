@@ -67,25 +67,24 @@ scoreSummaryPhenotype <- function(input,scoreMapping)
 
 #Mappings for test functions
 
-testData <- testData[c(1:10000),] #subset to speed testing
+#testData <- testData[c(1:10000),] #subset to speed testing
 
-recode <- data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3))
-locationWeight <- data.frame(c("Left Colon", "Perianal"), c(1, 3))
+#recode <- data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3))
+#locationWeight <- data.frame(c("Left Colon", "Perianal"), c(1, 3))
 
-luminalMap <- data.frame(type = c("","Inflammatory"), value = c(0,1),stringsAsFactors = FALSE)
-EIM <- data.frame(type = c("","IDDM"), value = c(0,1),stringsAsFactors = FALSE)
+#luminalMap <- data.frame(type = c("","Inflammatory"), value = c(0,1),stringsAsFactors = FALSE)
+#EIM <- data.frame(type = c("","IDDM"), value = c(0,1),stringsAsFactors = FALSE)
 
-l <- list("Luminal",luminalMap)
-names(l) <- c("columnID","map")
-e <- list("EIM",EIM)
-names(e) <- c("columnID","map")
+#l <- list("Luminal",luminalMap)
+#names(l) <- c("columnID","map")
+#e <- list("EIM",EIM)
+#names(e) <- c("columnID","map")C
 
-featureMapping <- list(l,e)
+#featureMapping <- list(l,e)
 
 
-r <- compileScoringMap("test.scoreConfig")
-c <- (r[[1]][[2]])
-q <- (r[[2]][[2]])
+#r <- compileScoringMap("test.scoreConfig")
+
 
 
 #ddt <- scoreSummaryPhenotype(testData,r)

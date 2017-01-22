@@ -47,5 +47,5 @@ categoryToDosage <- function(dataSet, indices, dosageHash)
 }
 
 #categoryHashtest <-
-  data.frame(c("Test1", "Test2", "Z"), c(1, 2, 3), stringsAsFactors = FALSE)
+#  data.frame(c("Test1", "Test2", "Z"), c(1, 2, 3), stringsAsFactors = FALSE)
 #test3 <- categoryToDosage(test2, c(7, 8), categoryHashtest)
