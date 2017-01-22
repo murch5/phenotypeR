@@ -20,62 +20,101 @@ source("categorize.R")  #include source for categorize function
 library(dplyr)
 
 
-evaluateCriteria <- function(dataSubset, criteria, classifyHash)
+evaluateSetCriteria <- function(classifiedData, classifyHash)
 {
- 
-  dataEvaluated <- data.frame()
- 
-  
-  r <- lapply(criteria,function(x){
+  q <- apply(classifiedData,1, function(y) {
+    result <- all(y, na.rm = FALSE)
     
-    d <- apply(dataSubset,1,function(y){
-
-       evalExp <- c("y[\"",(x[,1]),"\"]",x[,2],x[,3])
-       evalExp <- paste(evalExp,collapse="")
-       
-       if(eval(parse(text=evalExp)))
-       {
-         return(TRUE)
-       } else
-       {
-         return(FALSE)
-       }
-      
-    })
+    if (result == TRUE)
+    {
+      value = classifyHash[[2]]
+    }
+    else
+    {
+      value = classifyHash[[3]]
+    }
+    return(value)
     
-    classifiedData <- as.data.frame(d)
-    name <- paste(x,collapse="")
-    colnames(classifiedData) <- name
-    return(classifiedData)
     
   })
   
-  r <- as.data.frame(r,stringsAsFactors=FALSE)
-  dataSubset <- cbind(dataSubset,r)
+  q <- as.data.frame(q, stringsAsFactors = FALSE)
+  colnames(q) <- classifyHash[1]
+  setCriteriaAdded <- cbind(classifiedData, q)
+  return(setCriteriaAdded)
+}
+evaluateCriteria <- function(dataSubset, criteria, classifyHash)
+{
+  dataEvaluated <- data.frame()
+ colNames <- character()
+ 
+  r <- lapply(criteria, function(x) {
+    d <- apply(dataSubset, 1, function(y) {
+      evalExp <- c("y[\"", (x[, 1]), "\"]", x[, 2], x[, 3])
+      evalExp <- paste(evalExp, collapse = "")
+      
+      
+      if (eval(parse(text = evalExp)))
+      {
+        flag = TRUE
+      } else
+      {
+        flag = FALSE
+      }
+      
+      return(flag)
+    })
+    
+    classifiedData <- as.data.frame(d, stringsAsFactors = FALSE)
+    
+    name <- paste(x, collapse = "")
+    colnames(classifiedData) <- as.character(name)
+    colNames <<- c(colNames,as.character(name))
+    return(classifiedData)
+    
+  })
+  r <- as.data.frame(r, stringsAsFactors = FALSE)
+  colnames(r) <- colNames
+  
+  
+  fullSet <- evaluateSetCriteria(r, classifyHash)
+  
+  dataSubset <- cbind(dataSubset, fullSet)
   return(dataSubset)
   
 }
 
-classifyMutate <- function(dataSet, filters, columns, criteria, classifyHash)
-{
-
-  d <-
-    dataSet %>%
-    filter_(.,filters) %>%
-    select_(.,columns) %>%
-    do(evaluateCriteria(.,criteria,classifyHash)) 
-
-  return(d)
-  
-}
+classifyMutate <-
+  function(dataSet,
+           filters,
+           columns,
+           criteria,
+           classifyHash)
+  {
+    d <-
+      dataSet %>%
+      filter_(., filters) %>%
+      select_(., columns) %>%
+      do(evaluateCriteria(., criteria, classifyHash))
+    
+    return(d)
+    
+  }
 
 test <- read.csv("test2.csv", stringsAsFactors = FALSE)
+test <- test[c(1:100),]
 categoryHashtest <-
   data.frame(c(1, 2, 16984), c("Test1", "Test2", "Test2"), stringsAsFactors = FALSE)
 
 
-crit <- data.frame("paternalID",">","1", stringsAsFactors=FALSE)
-crit2 <- data.frame("paternalID","<","1", stringsAsFactors=FALSE)
+crit <- data.frame("paternalID", ">", "1", stringsAsFactors = FALSE)
+crit2 <- data.frame("paternalID", "<", "1", stringsAsFactors = FALSE)
 critList <- list(crit, crit2)
+classify <- list("ALL", "A1", "A2")
 
-test2 <- classifyMutate(test[,-1],as.character("sexID>1"),"paternalID",critList, categoryHashtest)
+test2 <-
+  classifyMutate(test[, -1],
+                 as.character("sexID>1"),
+                 "paternalID",
+                 critList,
+                 classify)
