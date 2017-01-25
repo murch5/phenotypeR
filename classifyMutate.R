@@ -104,14 +104,14 @@ classifyMutate <-
 
 #test <- read.csv("test2.csv", stringsAsFactors = FALSE)
 #test <- test[c(1:100),]
-categoryHashtest <-
-  data.frame(c(1, 2, 16984), c("Test1", "Test2", "Test2"), stringsAsFactors = FALSE)
+#categoryHashtest <-
+ # data.frame(c(1, 2, 16984), c("Test1", "Test2", "Test2"), stringsAsFactors = FALSE)
 
 
-crit <- data.frame("paternalID", ">", "1", stringsAsFactors = FALSE)
-crit2 <- data.frame("paternalID", "<", "1", stringsAsFactors = FALSE)
-critList <- list(crit, crit2)
-classify <- list("ALL", "A1", "A2")
+#crit <- data.frame("paternalID", ">", "1", stringsAsFactors = FALSE)
+#crit2 <- data.frame("paternalID", "<", "1", stringsAsFactors = FALSE)
+#critList <- list(crit, crit2)
+#classify <- list("ALL", "A1", "A2")
 
 #test2 <-
  # classifyMutate(test[, -1],
