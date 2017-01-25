@@ -32,7 +32,7 @@ scoreSummaryPhenotype <- function(input,scoreMapping)
   
   scoreSummary <-
     input %>% 
-    group_by(MuiseLabID, Tbl_Encounter.Timing, Date, Ix) %>%
+    group_by(MuiseLabID, Tbl_Encounter_Timing, Date, Ix) %>%
     select(.,Site,Involvement, Luminal, EIM)  %>% 
     do(scorePhenotype(., scoreMapping[[1]][[2]], scoreMapping[[2]][[2]],scoreMapping[c(3:(length(scoreMapping)))]))
   
@@ -47,21 +47,18 @@ scoreSummaryPhenotype <- function(input,scoreMapping)
   aggregateByEnc <<-
     scoreSummary %>%
     ungroup %>%
-    group_by(MuiseLabID,Tbl_Encounter.Timing) %>%
+    group_by(MuiseLabID,Tbl_Encounter_Timing) %>%
     dplyr::summarize(.,aggregateMean.ByEncounter = mean(modelUnweighted), aggregateSD.ByEncounter = sd(modelUnweighted))
   
   aggregateByDate <<-
     scoreSummary %>%
     ungroup %>%
-    group_by(MuiseLabID,Tbl_Encounter.Timing,Date) %>%
+    group_by(MuiseLabID,Tbl_Encounter_Timing,Date) %>%
     dplyr::summarize(.,aggregateMean.ByDate = mean(modelUnweighted), aggregateSD.ByDate = sd(modelUnweighted))
 
     
   phenotypeScore <- list(scoreSummary,aggregateByDate,aggregateByEnc,aggregateByDate)
-    
   
-    ddd<<-phenotypeScore
-
   return(scoreSummary)
 }
 
