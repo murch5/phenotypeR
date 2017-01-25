@@ -22,7 +22,7 @@ scoreModelPhenotype <- function(scoreSummary,weights)
 
   scoreModel <-
     scoreSummary %>%
-    select(.,contains("Sum")) %>%
+    select(.,contains("Unweighted_sum")) %>%
     mutate(modelUnweighted = sum(.)) %>%
     select(.,contains("model")) 
   
