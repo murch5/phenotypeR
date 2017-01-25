@@ -17,14 +17,18 @@
 # return:
 #   output - data.frame containing new score values
 
-
+library(dplyr)
 library(plyr)
 
 scorePhenotypeByLocation <-
   function(input, recodeValues, locationWeights)
   {
     
-    scores <- as.data.frame(apply(input, 1, function(x) {
+
+    scores <- apply(input, 1, function(x) {
+      
+      
+      
       recodedScore <- as.numeric(recodeValues[which(recodeValues[, 1] == x["Involvement"]), 2])
       
       weightedScore <-
@@ -37,38 +41,62 @@ scorePhenotypeByLocation <-
         weightedScore = NA
       }
       
-      score <- c(recodedScore, weightedScore)
+      score <- data.frame(site=x["Site"],recodeScore = as.numeric(recodedScore), weightScore = as.numeric(weightedScore), stringsAsFactors = FALSE)
       
       return(score)
       
-    }))
+    })
     
-    scores <- as.data.frame(t(scores))
+    scores <- bind_rows(scores)
+  
+    scores <- unique(scores)
+    
+    
+   # scores <- as.data.frame(t(scores), stringsAsFactors = FALSE,row.names = FALSE)
+    
+    scores <- scores[,-1]
+    
+    #scores <- as.numeric(scores)
+    
     colnames(scores) <- c("Unweighted", "Weighted")
     
-    d <-
-      ddply(
-        scores,
-        .(),
-        summarize,
-        SumUnweighted = sum(Unweighted, na.rm = T),
-        SumWeighted = sum(Weighted, na.rm = T),
-        MeanUnweighted = mean(Unweighted, na.rm = T),
-        MeanWeighted = mean(Weighted, na.rm = T),
-        SDUnweighted = sd(Unweighted,na.rm=T),
-        SDWeighted = sd(Weighted,na.rm=T),
-        totalLocation = sum(!is.na(Unweighted),na.rm=T),
-        totalLocationAffected = sum(Unweighted>0,na.rm=T),
-        totalNA = sum(is.na(Unweighted))
-      )
+   # scoreSummarized <- scores %>%
+           #   summarise_each(funs(SumUnweighted = sum(Unweighted, na.rm = T),
+           #                       SumWeighted = sum(Weighted, na.rm = T),
+           #                       MeanUnweighted = mean(Unweighted, na.rm = T),
+           #                       MeanWeighted = mean(Weighted, na.rm = T),
+           #                       SDUnweighted = sd(Unweighted,na.rm=T),
+           #                       SDWeighted = sd(Weighted,na.rm=T),
+           #                       totalLocation = sum(!is.na(Unweighted),na.rm=T),
+           #                       totalLocationAffected = sum(Unweighted>0,na.rm=T),
+           #                       totalNA = sum(is.na(Unweighted))))
+    
+    scoreSummarized <- scores %>%
+      summarise_all(.funs = c(sum = "sum",mean = "mean",sd = "sd"))
+
+   # d <-
+   #   ddply(
+   #     scores,
+   #     .(),
+   #     summarize,
+   #     SumUnweighted = sum(Unweighted, na.rm = T),
+   #     SumWeighted = sum(Weighted, na.rm = T),
+   #     MeanUnweighted = mean(Unweighted, na.rm = T),
+   #     MeanWeighted = mean(Weighted, na.rm = T),
+   #     SDUnweighted = sd(Unweighted,na.rm=T),
+   #     SDWeighted = sd(Weighted,na.rm=T),
+   #     totalLocation = sum(!is.na(Unweighted),na.rm=T),
+   #     totalLocationAffected = sum(Unweighted>0,na.rm=T),
+   #     totalNA = sum(is.na(Unweighted))
+   #  )
 
     
-    locationScores <- d[,-1] #removed .id column from ddply
+    #locationScores <- scoreSummarized[,-1] #removed .id column from ddply
    
-    return(locationScores)
+    return(scoreSummarized)
   }
 
 #testData <- read.csv("test.csv",stringsAsFactors=FALSE)
 #testData2 <- testData[c(2:8), c(16, 17)]
 #t <-
-#  scorePhenotypeByLocation(testData2, data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
+  #scorePhenotypeByLocation(testData2, data.frame(c("Not Involved", "Macroscopic Disease"), c(0, 3)), data.frame(c("Left Colon", "Perianal"), c(1, 3)))
