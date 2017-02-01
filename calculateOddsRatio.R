@@ -19,8 +19,44 @@
 library(dplyr)
 library(epitools)
 
-generateOddsRatioSet <- function(data, caseControlCond)
+compileOddsRatioData <- function(dataSet, caseControlCond, covarList)
 {
+  
+  oddsRatioList <- lapply(covarList, function(y){
+    
+    contig <- calculateContigencyTable(dataSet[,c(caseControlCond,y)],caseControlCond,y)
+    oddsSet <- extractOddsData(contig)
+    
+    return(oddsSet)
+    
+  })
+  
+  oddsRatioDF <- bind_rows(oddsRatioList)
+  
+  return(oddsRatioDF)
+}
+
+extractOddsData <- function(oddsData)
+{
+  
+  datadf <- oddsData[[1]]
+  ORdf <- oddsData[[2]]
+  pvaldf <- oddsData[[3]]
+  
+
+  
+  disease <- names(dimnames(datadf))[2]
+  name <- names(dimnames(ORdf))[1]
+  
+  OR <- ORdf[2,1]
+  LCI <- ORdf[2,2]
+  UCI <- ORdf[2,3]
+  
+  newOddsData <- data.frame(Disease=disease,Exposure=name,Odds_Ratio=OR,LCI=LCI,UCI=UCI,stringsAsFactors=FALSE)
+  
+  colnames(newOddsData) <- c("Disease","Exposure","Odds Ratio","Lower 95% CI","Upper 95% CI")
+  
+  return(newOddsData)
   
 }
 
@@ -47,9 +83,7 @@ calculateContigencyTable <- function(data, caseControlCond, covar)
 calculateOddsRatio <- function(contigTable)
 {
   oddsRatio <- oddsratio.fisher(contigTable, NULL)
-  
-  print(oddsRatio)
-  
+
   return(oddsRatio)
   
 }
