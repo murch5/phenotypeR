@@ -37,7 +37,13 @@ vignettes/*.pdf
 *.csv
 *.txt
 *scoreConfig
+*.xlsx
+*.xls
+*.pdf
 
 #R Scripts to be kept only locally
 *_local.R
+
+
+
 
