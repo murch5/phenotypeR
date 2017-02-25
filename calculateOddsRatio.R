@@ -112,7 +112,7 @@ calculateContigencyTable <- function(data, caseControlCond, covar)
 
 calculateOddsRatio <- function(contigTable)
 {
-  oddsRatio <- oddsratio.fisher(contigTable, NULL)
+  oddsRatio <<- oddsratio.fisher(contigTable, NULL)
   
   return(oddsRatio)
   
