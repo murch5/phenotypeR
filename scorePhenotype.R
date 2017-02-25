@@ -26,6 +26,7 @@ scorePhenotype <- function(dataSet,recodeValues, locationWeights, featureMapping
 {
   
   site <- scorePhenotypeByLocation(dataSet, recodeValues, locationWeights)
+  
   feature <- scorePhenotypeByFeature(dataSet,featureMapping)
 
   scoreCombined <- cbind(site,feature)
