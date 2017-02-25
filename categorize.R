@@ -16,6 +16,8 @@
 
 categorize <- function(input, categoryHash)
 {
+  
+  print(input)
   if (is.na(input)) {
     categorizedData <- NA
     
