@@ -28,6 +28,9 @@ flattenEntry <- function(entry)
     uniqEntry <- unique(x)
     
     uniqEntry <- uniqEntry[!is.na(uniqEntry)]
+    
+    uniqEntry <- uniqEntry[which(uniqEntry!="")]
+    
     if(length(uniqEntry)<1){uniqEntry=NA}
     
     if(length(uniqEntry)>1)
