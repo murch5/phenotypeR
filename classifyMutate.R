@@ -2,7 +2,7 @@
 # CATEGORIZE AND MUTATE FUNCTION
 #
 #
-# Function to categorize a subset of columns in a data.frame while returning a new data.frame with new columns appended (adjacent to categorized columns) 
+# Function to categorize a subset of columns in a data.frame while returning a new data.frame with new columns appended (adjacent to categorized columns)
 #
 # - passes data.frame containing dataset, indices of the columns to be categorized, and category hash table
 # - creates one new column for each column categorized
@@ -22,7 +22,7 @@ library(dplyr)
 
 evaluateSetCriteria <- function(classifiedData, classifyHash)
 {
-  q <- apply(classifiedData,1, function(y) {
+  q <- apply(classifiedData, 1, function(y) {
     result <- all(y, na.rm = FALSE)
     
     if (result == TRUE)
@@ -47,8 +47,8 @@ evaluateSetCriteria <- function(classifiedData, classifyHash)
 evaluateCriteria <- function(dataSubset, criteria, classifyHash)
 {
   dataEvaluated <- data.frame()
- colNames <- character()
- 
+  colNames <- character()
+  
   r <- lapply(criteria, function(x) {
     d <- apply(dataSubset, 1, function(y) {
       evalExp <- c("y[\"", (x[, 1]), "\"]", x[, 2], x[, 3])
@@ -70,7 +70,7 @@ evaluateCriteria <- function(dataSubset, criteria, classifyHash)
     
     name <- paste(x, collapse = "")
     colnames(classifiedData) <- as.character(name)
-    colNames <<- c(colNames,as.character(name))
+    colNames <<- c(colNames, as.character(name))
     return(classifiedData)
     
   })
@@ -105,7 +105,7 @@ classifyMutate <-
 #test <- read.csv("test2.csv", stringsAsFactors = FALSE)
 #test <- test[c(1:100),]
 #categoryHashtest <-
- # data.frame(c(1, 2, 16984), c("Test1", "Test2", "Test2"), stringsAsFactors = FALSE)
+# data.frame(c(1, 2, 16984), c("Test1", "Test2", "Test2"), stringsAsFactors = FALSE)
 
 
 #crit <- data.frame("paternalID", ">", "1", stringsAsFactors = FALSE)
@@ -114,8 +114,8 @@ classifyMutate <-
 #classify <- list("ALL", "A1", "A2")
 
 #test2 <-
- # classifyMutate(test[, -1],
+# classifyMutate(test[, -1],
 #                 as.character("sexID>1"),
-  #               "paternalID",
- #                critList,
-    #             classify)
+#               "paternalID",
+#                critList,
+#             classify)
