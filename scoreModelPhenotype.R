@@ -17,6 +17,7 @@
 #   output - data.frame containing new score values
 
 library(dplyr)
+
 scoreModelPhenotype <- function(scoreSummary,weights)
 {
 
