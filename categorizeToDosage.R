@@ -26,9 +26,11 @@ categoryToDosage <- function(dataSet, indices, dosageHash)
     return(t)
   })
   
+  print(temp)
   colnames(temp) <- paste(colnames(temp), "Dosage", sep = " ")
   
-  
+  if(ncol(temp)>1)
+  {
   combined <- as.data.frame(rowSums(temp, na.rm = TRUE))
   combinedFrac <-
     as.data.frame(combined / (max(dosageHash[, 2], na.rm = TRUE) * length(indices)))
@@ -41,6 +43,7 @@ categoryToDosage <- function(dataSet, indices, dosageHash)
   
   temp <- cbind(temp, combined)
   temp <- cbind(temp, combinedFrac)
+}
   dataSet <- cbind(dataSet, temp)
   
   return(dataSet)
