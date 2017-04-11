@@ -28,7 +28,6 @@ categoryToDosage <- function(dataSet, indices, dosageHash)
   
   print(temp)
   colnames(temp) <- paste(colnames(temp), "Dosage", sep = " ")
-  
   if(ncol(temp)>1)
   {
   combined <- as.data.frame(rowSums(temp, na.rm = TRUE))

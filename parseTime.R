@@ -57,6 +57,11 @@ parseTimeDays <- function(time)
   
 }
 
+parseTimeDaysToYears <- function(time)
+{
+  return(time*365)
+  
+}
 
 parseTimeCol <- function(dataSet, indices)
 {
@@ -66,6 +71,8 @@ parseTimeCol <- function(dataSet, indices)
   })
   
   colnames(temp) <- paste(colnames(temp), "Days", sep = "_")
+  
+  
   
   dataSet <- cbind(dataSet, temp)
   
