@@ -29,7 +29,7 @@ groupApplyID <- function(dataSet,groupingsFolder)
     grouping <- read.csv2(paste(path,x,sep="",collapse = ""),stringsAsFactors = FALSE)
     
     grouping <- grouping[1]
-    print(grouping)
+  
 
     dataSet <- groupByID(dataSet,colnames(grouping),1,grouping)
   

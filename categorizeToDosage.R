@@ -26,7 +26,7 @@ categoryToDosage <- function(dataSet, indices, dosageHash)
     return(t)
   })
   
-  print(temp)
+
   colnames(temp) <- paste(colnames(temp), "Dosage", sep = " ")
   if(ncol(temp)>1)
   {

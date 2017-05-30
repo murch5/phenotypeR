@@ -27,16 +27,13 @@ library(dplyr)
 scoreSummaryPhenotype <- function(input,scoreMapping)
 {
   
-  print(scoreMapping[3:length(scoreMapping)])
-  print(length(scoreMapping))
-  
+
   scoreSummary <-
     input %>% 
     group_by(MuiseLabID, Tbl_Encounter_Timing, Date, Ix) %>%
     select(.,Site,Involvement, Luminal, EIM)  %>% 
     do(scorePhenotype(., scoreMapping[[1]][[2]], scoreMapping[[2]][[2]],scoreMapping[c(3:(length(scoreMapping)))]))
   
-  print(scoreSummary)
   
   aggregateByID <<-
     scoreSummary %>%

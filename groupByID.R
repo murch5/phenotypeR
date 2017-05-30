@@ -21,7 +21,7 @@ groupByID <- function(dataSet,groupName,IDcol,IDlist)
 {
   
   IDlist <- IDlist[[1]]
-  print(IDlist)
+  
   
   newColumn <- apply(dataSet,1,function(y)
   {
