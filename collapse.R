@@ -4,7 +4,7 @@
 #
 # Function used to collapse individual phenotype data from observation format (tidy form)
 #
-# - passes data.frame containing dataset, indices of the columns to be categorized, and category hash table
+# - passes data.frame containing data_set, indices of the columns to be categorized, and category hash table
 # - creates one new column for each column categorized
 # - returns data.frame with new columns insert after categorized columns
 #
@@ -20,43 +20,44 @@ library(dplyr)
 
 flattenEntry <- function(entry)
 {
-  colName <- colnames(entry)
+  col_names <- colnames(entry)
   
-  flatData <- apply(entry,2,function(x)
+  data_flat <- apply(entry,2,function(x)
     {
     
-    uniqEntry <- unique(x)
+    entry_unique <- unique(x)
     
-    uniqEntry <- uniqEntry[!is.na(uniqEntry)]
+    entry_unique <- entry_unique[!is.na(entry_unique)]
     
-    uniqEntry <- uniqEntry[which(uniqEntry!="")]
+    entry_unique <- entry_unique[which(entry_unique!="")]
     
-    if(length(uniqEntry)<1){uniqEntry=NA}
+    if(length(entry_unique)<1){entry_unique=NA}
     
-    if(length(uniqEntry)>1)
+    if(length(entry_unique)>1)
     {
-      uniqEntry <- paste(uniqEntry,collapse=";")
+      entry_unique <- paste(entry_unique,collapse=";")
       
     }
     
-    return(as.data.frame(uniqEntry, stringsAsFactors = FALSE))
+    return(as.data.frame(entry_unique, stringsAsFactors = FALSE))
   })
-  f <- as.data.frame(flatData,stringsAsFactors = FALSE)
-  colnames(f) <- colName
-  f[,1] <- as.numeric(f[,1])
   
-  return(f)
+  data_flat <- as.data.frame(data_flat,stringsAsFactors = FALSE)
+  colnames(data_flat) <- col_names
+  data_flat[,1] <- as.numeric(data_flat[,1])
+  
+  return(data_flat)
   
 }
-collapse <- function(dataset,indexColumn)
+collapse <- function(data_set,index_col)
 {
   
-  flattenedSet <<- dataset %>%
+  data_flattened <<- data_set %>%
     group_by(MuiseLabID) %>%
     do(flattenEntry(.))
   
   
-return(flattenedSet)
+return(data_flattened)
   
 }
 

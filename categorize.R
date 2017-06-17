@@ -9,27 +9,27 @@
 #
 # arguments:
 #   input - value to be categorized
-#   categoryHash - hash table containing categories to be mapped
+#   hash_category - hash table containing categories to be mapped
 #
 # return:
 #   output - hash table converted value (typically as character)
 
-categorize <- function(input, categoryHash)
+categorize <- function(input, hash_category)
 {
   
   
   if (is.na(input)) {
-    categorizedData <- NA
+    data_categorized <- NA
     
   } else{
-    categorizedData <-
-      categoryHash[which(categoryHash[, 1] == input), 2]
+    data_categorized <-
+      hash_category[which(hash_category[, 1] == input), 2]
   }
   
-  if (length(categorizedData) < 1) {
-    categorizedData <- NA
+  if (length(data_categorized) < 1) {
+    data_categorized <- NA
   }
   
-  return(categorizedData)
+  return(data_categorized)
   
 }
