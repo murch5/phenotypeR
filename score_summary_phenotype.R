@@ -20,9 +20,12 @@
 
 source("score_phenotype.R")
 source("compile_scoring_map.R")
+source("logger.R")
 
-library(plyr)
-library(dplyr)
+
+
+suppressPackageStartupMessages(library(plyr))
+suppressPackageStartupMessages(library(dplyr))
 
 scoreSummaryPhenotype <- function(input,score_map)
 {
@@ -31,33 +34,37 @@ scoreSummaryPhenotype <- function(input,score_map)
   weights <-  score_map[[2]]
   map_features <- score_map[c(3:(length(score_map)))]
 
+  flog.info("Scoring phenotypes")
+  
   score_map <-
     input %>% 
+    ungroup() %>%
     group_by(MuiseLabID, Tbl_Encounter_Timing, Date, Ix) %>%
-    select(.,Site,Involvement, Luminal, EIM)  %>% 
+    select(.,Site,Involvement, Luminal, EIM)  %>%
     do(scorePhenotype(., recode_val,weights,map_features))
   
-  
-  score_aggregate_by_ID <<-
+  flog.info("Aggregate score data by ID")
+  score_aggregate_by_ID <-
     score_map %>%
-    ungroup %>%
+    ungroup() %>%
     group_by(MuiseLabID) %>%
     dplyr::summarize(.,aggregateMean.ByID = mean(modelUnweighted), aggregateSD.ByID = sd(modelUnweighted))
-  
-  score_aggregate_by_Enc <<-
+  flog.info("Aggregate score data by Encounter")
+  score_aggregate_by_Enc <-
     score_map %>%
-    ungroup %>%
+    ungroup() %>%
     group_by(MuiseLabID,Tbl_Encounter_Timing) %>%
     dplyr::summarize(.,aggregateMean.ByEncounter = mean(modelUnweighted), aggregateSD.ByEncounter = sd(modelUnweighted))
   
-  score_aggregate_by_Date <<-
+  flog.info("Aggregate score data by Investigation")
+  score_aggregate_by_Date <-
     score_map %>%
-    ungroup %>%
+    ungroup() %>%
     group_by(MuiseLabID,Tbl_Encounter_Timing,Date) %>%
     dplyr::summarize(.,aggregateMean.ByDate = mean(modelUnweighted), aggregateSD.ByDate = sd(modelUnweighted))
 
-    
-  phenotypeScore <- list(score_map,score_aggregate_by_Date,score_aggregate_by_Enc,score_aggregate_by_Date)
+  flog.info("Compile phenotype scores into list of df")
+  phenotype_score <- list(score_map,score_aggregate_by_ID,score_aggregate_by_Enc,score_aggregate_by_Date)
   
-  return(score_map)
+  return(phenotype_score)
 }
