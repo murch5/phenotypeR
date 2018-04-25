@@ -16,7 +16,7 @@
 # return:
 #   output - data.frame containing new score values
 
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 
 scoreModelPhenotype <- function(score_summ,weights)
 {

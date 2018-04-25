@@ -16,7 +16,7 @@
 # return:
 #   output - data.frame containg dataSet with new category columns appended adjacent to original columns
 
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 
 flattenEntry <- function(entry)
 {

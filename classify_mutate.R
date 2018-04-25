@@ -17,7 +17,7 @@
 #   output - data.frame containg dataSet with new category columns appended adjacent to original columns
 
 source("categorize.R")  #include source for categorize function
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 
 
 evaluateSetCriteria <- function(data_classified, hash_classify)

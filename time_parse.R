@@ -1,7 +1,7 @@
 #TTC7A Pheno Processing II
 
-library(dplyr)
-library(stringr)
+suppressPackageStartupMessage(library(dplyr))
+suppressPackageStartupMessages(library(stringr))
 source("clean_DF.R")
 
 

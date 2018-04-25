@@ -16,8 +16,8 @@
 # return:
 #   oddsSet - returns data.frame containing odds ratios calculations sorted by exposure and the individual covariate
 
-library(dplyr)
-library(epitools)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(epitools))
 
 compileOddsRatioData <-
   function(data_set, case_control_cond, covar_list)
