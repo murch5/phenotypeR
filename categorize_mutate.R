@@ -18,14 +18,19 @@
 
 source("categorize.R")  #include source for categorize function
 
-categorizeMutate <- function(data_set, indices, hash_category)
+categorizeMutate <- function(data_set, indices, hash_category, col_name=NULL)
 {
   data_mutated <- apply(data_set[indices], c(1, 2), function(x) {
     t <- categorize(x, hash_category)
     return(t)
   })
-  
+  if(is.null(col_name)){
   colnames(data_mutated) <- paste(colnames(data_mutated), "Categorized", sep = " ")
+  }
+  else
+  {
+    colnames(data_mutated) <- col_name  
+  }
   
   data_set <- cbind(data_set, data_mutated)
   
